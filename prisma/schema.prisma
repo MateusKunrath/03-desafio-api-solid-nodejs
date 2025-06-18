@@ -43,5 +43,72 @@ model Organization {
 
   owner User @relation(fields: [ownerId], references: [id])
 
+  Pet Pet[]
+
   @@map("organizations")
+}
+
+enum PetAge {
+  PUPPY
+  ADULT
+  OLD
+}
+
+enum PetEnergyLevel {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+  CRAZY
+}
+
+enum PetEnvironment {
+  SPACIOUS
+  LIMITED
+  OUTDOOR
+  ANY
+}
+
+enum PetIndependencyLevel {
+  TOTALLY_INDEPENDENT
+  VERY_INDEPENDENT
+  FAIRLY_INDEPENDENT
+  SOMEWHAT_DEPENDENT
+  QUITE_DEPENDENT
+  VERY_DEPENDENT
+}
+
+model Pet {
+  id                 String               @id @default(uuid())
+  name               String
+  about              String
+  age                PetAge
+  energy_level       PetEnergyLevel
+  environment        PetEnvironment
+  independency_level PetIndependencyLevel
+  created_at         DateTime             @default(now())
+
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  organization_id String
+
+  PetImages       PetImages[]
+  PetRequirements PetRequirements[]
+}
+
+model PetImages {
+  id         String   @id @default(uuid())
+  url        String   @unique
+  created_at DateTime @default(now())
+
+  pet    Pet    @relation(fields: [pet_id], references: [id])
+  pet_id String
+}
+
+model PetRequirements {
+  id          String   @id @default(uuid())
+  requirement String
+  created_at  DateTime @default(now())
+
+  pet    Pet    @relation(fields: [pet_id], references: [id])
+  pet_id String
 }

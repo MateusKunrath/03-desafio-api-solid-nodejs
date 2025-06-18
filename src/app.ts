@@ -6,6 +6,8 @@ import { env } from './env'
 
 import { ZodError } from 'zod'
 import { organizationsRoutes } from './http/controllers/organizations/routes'
+import fastifyMultipart from '@fastify/multipart'
+import { petsRoutes } from './http/controllers/pets/routes'
 
 export const app = fastify()
 
@@ -18,8 +20,15 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
+app.register(fastifyMultipart, {
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB
+    files: 10,
+  },
+})
 
 app.register(organizationsRoutes)
+app.register(petsRoutes)
 
 app.setErrorHandler((error, _request, reply) => {
   if (error instanceof ZodError) {
