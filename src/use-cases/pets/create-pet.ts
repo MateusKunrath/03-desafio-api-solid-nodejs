@@ -5,12 +5,14 @@ import {
   PetEnergyLevel,
   PetEnvironment,
   PetIndependencyLevel,
+  PetSize,
 } from '@prisma/client'
 
 interface CreatePetUseCaseRequest {
   name: string
   about: string
   age: PetAge
+  size: PetSize
   energyLevel: PetEnergyLevel
   environment: PetEnvironment
   independencyLevel: PetIndependencyLevel
@@ -28,6 +30,7 @@ export class CreatePetUseCase {
     name,
     about,
     age,
+    size,
     energyLevel,
     environment,
     independencyLevel,
@@ -37,6 +40,7 @@ export class CreatePetUseCase {
       name,
       about,
       age,
+      size,
       energy_level: energyLevel,
       environment,
       independency_level: independencyLevel,

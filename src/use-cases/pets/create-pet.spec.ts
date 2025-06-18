@@ -14,6 +14,7 @@ describe('Create organization use case', () => {
       name: 'Frederico',
       about: 'Cachorro dócil',
       age: 'ADULT',
+      size: 'LARGE',
       energyLevel: 'CRAZY',
       environment: 'OUTDOOR',
       independencyLevel: 'TOTALLY_INDEPENDENT',

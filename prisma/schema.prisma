@@ -54,6 +54,14 @@ enum PetAge {
   OLD
 }
 
+enum PetSize {
+  TOY
+  SMALL
+  MEDIUM
+  LARGE
+  GIANT
+}
+
 enum PetEnergyLevel {
   LOW
   MEDIUM
@@ -83,6 +91,7 @@ model Pet {
   name               String
   about              String
   age                PetAge
+  size               PetSize
   energy_level       PetEnergyLevel
   environment        PetEnvironment
   independency_level PetIndependencyLevel

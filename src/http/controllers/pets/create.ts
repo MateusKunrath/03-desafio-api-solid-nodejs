@@ -4,6 +4,7 @@ import {
   PetEnergyLevel,
   PetEnvironment,
   PetIndependencyLevel,
+  PetSize,
 } from '@prisma/client'
 import { z } from 'zod'
 
@@ -18,6 +19,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     name: z.string().min(3),
     about: z.string().min(10),
     age: z.enum(Object.values(PetAge) as [string, ...string[]]),
+    size: z.enum(Object.values(PetSize) as [string, ...string[]]),
     energyLevel: z.enum(Object.values(PetEnergyLevel) as [string, ...string[]]),
     environment: z.enum(Object.values(PetEnvironment) as [string, ...string[]]),
     independencyLevel: z.enum(
@@ -27,8 +29,15 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
   const { organizationId } = createPetParamsSchema.parse(request.params)
 
-  const { name, about, age, energyLevel, environment, independencyLevel } =
-    createPetBodySchema.parse(request.body)
+  const {
+    name,
+    about,
+    age,
+    size,
+    energyLevel,
+    environment,
+    independencyLevel,
+  } = createPetBodySchema.parse(request.body)
 
   const createPetUseCase = makeCreatePetUseCase()
 
@@ -36,6 +45,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     name,
     about,
     age: age as PetAge,
+    size: size as PetSize,
     energyLevel: energyLevel as PetEnergyLevel,
     environment: environment as PetEnvironment,
     independencyLevel: independencyLevel as PetIndependencyLevel,
