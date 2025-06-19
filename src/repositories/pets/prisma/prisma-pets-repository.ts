@@ -6,8 +6,9 @@ import {
   PetSize,
   Prisma,
 } from '@prisma/client'
-
 import { prisma } from '@/lib/prisma'
+
+import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
 
 import { FindManyParams, PetsRepository } from '../pets-repository'
 
@@ -43,5 +44,20 @@ export class PrismaPetsRepository implements PetsRepository {
     })
 
     return pets
+  }
+
+  async findById(id: string) {
+    const pet = await prisma.pet.findUnique({
+      where: { id },
+      include: {
+        organization: true,
+      },
+    })
+
+    if (!pet) {
+      throw new ResourceNotFoundError('Pet')
+    }
+
+    return pet
   }
 }
