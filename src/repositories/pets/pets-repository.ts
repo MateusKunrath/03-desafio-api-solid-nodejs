@@ -12,4 +12,5 @@ export interface FindManyParams {
 export interface PetsRepository {
   create(data: Prisma.PetUncheckedCreateInput): Promise<Pet>
   searchMany(data: FindManyParams, page: number): Promise<Pet[]>
+  findById(id: string): Promise<Pet | null>
 }
