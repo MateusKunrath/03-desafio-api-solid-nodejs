@@ -19,7 +19,11 @@ describe('Search pets use case', () => {
   it('should be able to search a list of pets by city', async () => {
     const organization = await organizationsRepository.create({
       name: 'Pets friendlys',
-      ownerId: randomUUID(),
+      owner: {
+        connect: {
+          id: randomUUID(),
+        },
+      },
       phone: '9999999999',
       zipCode: '99999999',
       state: 'New York',
@@ -61,7 +65,11 @@ describe('Search pets use case', () => {
   it('should be able to fetch paginated pets search', async () => {
     const organization = await organizationsRepository.create({
       name: 'Pets friendlys',
-      ownerId: randomUUID(),
+      owner: {
+        connect: {
+          id: randomUUID(),
+        },
+      },
       phone: '9999999999',
       zipCode: '99999999',
       state: 'New York',
@@ -98,7 +106,11 @@ describe('Search pets use case', () => {
   it('should be able to fetch pets searching by age', async () => {
     const organization = await organizationsRepository.create({
       name: 'Pets friendlys',
-      ownerId: randomUUID(),
+      owner: {
+        connect: {
+          id: randomUUID(),
+        },
+      },
       phone: '9999999999',
       zipCode: '99999999',
       state: 'New York',
