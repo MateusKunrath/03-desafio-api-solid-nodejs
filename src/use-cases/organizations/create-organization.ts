@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { OrganizationsRepository } from '@/repositories/organizations/organizations-repository'
 import { Organization } from '@prisma/client'
 import { hash } from 'bcryptjs'
@@ -48,9 +47,8 @@ export class CreateOrganizationUseCase {
   }: CreateOrganizationUseCaseRequest): Promise<CreateOrganizationUseCaseResponse> {
     const ownerPasswordHash = await hash(owner.password, 6)
 
-    const userWithSameEmail = await prisma.user.findUnique({
-      where: { email: owner.email },
-    })
+    const userWithSameEmail =
+      await this.organizationsRepository.findOwnerByEmail(owner.email)
 
     if (userWithSameEmail) {
       throw new UserAlreadyExistsError()

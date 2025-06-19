@@ -12,4 +12,12 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
 
     return organization
   }
+
+  async findOwnerByEmail(email: string) {
+    const owner = await prisma.user.findUnique({
+      where: { email },
+    })
+
+    return owner
+  }
 }
