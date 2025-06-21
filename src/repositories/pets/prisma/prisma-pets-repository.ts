@@ -16,6 +16,11 @@ export class PrismaPetsRepository implements PetsRepository {
   async create(data: Prisma.PetUncheckedCreateInput) {
     const pet = await prisma.pet.create({
       data,
+      include: {
+        organization: true,
+        PetImages: true,
+        PetRequirements: true,
+      },
     })
 
     return pet
@@ -40,6 +45,8 @@ export class PrismaPetsRepository implements PetsRepository {
       skip: (page - 1) * 20,
       include: {
         organization: true,
+        PetImages: true,
+        PetRequirements: true,
       },
     })
 
@@ -51,6 +58,8 @@ export class PrismaPetsRepository implements PetsRepository {
       where: { id },
       include: {
         organization: true,
+        PetImages: true,
+        PetRequirements: true,
       },
     })
 

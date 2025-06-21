@@ -53,4 +53,14 @@ export class InMemoryOrganizationsRepository
 
     return owner
   }
+
+  async findById(id: string) {
+    const organization = this.organizations.find((o) => o.id === id)
+
+    if (!organization) {
+      return null
+    }
+
+    return organization
+  }
 }

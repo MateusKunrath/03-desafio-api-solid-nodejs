@@ -7,7 +7,9 @@ import { env } from './env'
 import { ZodError } from 'zod'
 import { organizationsRoutes } from './http/controllers/organizations/routes'
 import fastifyMultipart from '@fastify/multipart'
+import fastifyStatic from '@fastify/static'
 import { petsRoutes } from './http/controllers/pets/routes'
+import path from 'node:path'
 
 export const app = fastify()
 
@@ -18,13 +20,16 @@ app.register(fastifyJwt, {
     expiresIn: '10m',
   },
 })
-
 app.register(fastifyCookie)
 app.register(fastifyMultipart, {
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB
     files: 10,
   },
+})
+app.register(fastifyStatic, {
+  root: path.join(process.cwd(), env.UPLOAD_DIR || 'uploads'),
+  prefix: `/${env.UPLOAD_DIR || 'uploads'}/`,
 })
 
 app.register(organizationsRoutes)
